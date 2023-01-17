@@ -27,7 +27,6 @@ docker run \
     -e POSTGRES_PASSWORD=${DB_PASS} \
     -e POSTGRES_DB=${DB_NAME} \
     -p ${DB_PORT}:5432 \
-    --name zero2prod-db \
     -d postgres \
     postgres -N 1000
 
