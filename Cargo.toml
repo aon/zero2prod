@@ -49,4 +49,5 @@ features = [
 
 [dev-dependencies]
 claim = "0.5"
+linkify = "0.8"
 wiremock = "0.5"
