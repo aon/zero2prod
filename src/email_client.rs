@@ -33,13 +33,8 @@ impl EmailClient {
         text_content: &str,
     ) -> Result<(), reqwest::Error> {
         let url = format!("{}/mail/send", self.base_url);
-        let request_body = SendEmailRequest::build(
-            &self.sender,
-            &recipient,
-            subject,
-            html_content,
-            text_content,
-        );
+        let request_body =
+            SendEmailRequest::build(&self.sender, recipient, subject, html_content, text_content);
         self.http_client
             .post(&url)
             .header(
