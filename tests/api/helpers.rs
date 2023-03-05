@@ -74,6 +74,22 @@ impl TestApp {
             .await
             .expect("Failed to execute request.")
     }
+
+    /// Post login to server.
+    pub async fn post_login<Body>(&self, body: Body) -> reqwest::Response
+    where
+        Body: serde::Serialize,
+    {
+        reqwest::Client::builder()
+            .redirect(reqwest::redirect::Policy::none())
+            .build()
+            .unwrap()
+            .post(&format!("{}/login", &self.address))
+            .form(&body)
+            .send()
+            .await
+            .expect("Failed to execute request.")
+    }
 }
 
 pub async fn spawn_app() -> TestApp {
@@ -179,4 +195,10 @@ impl TestUser {
 pub struct ConfirmationLinks {
     pub html: reqwest::Url,
     pub plain_text: reqwest::Url,
+}
+
+/// Asserts a given response redirects to a given location.
+pub fn assert_is_redirect_to(response: &reqwest::Response, location: &str) {
+    assert_eq!(response.status(), 303);
+    assert_eq!(response.headers().get("location").unwrap(), location);
 }
